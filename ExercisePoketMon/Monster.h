@@ -1,4 +1,8 @@
 #pragma once
+#include<string>
+#include<string.h>
+
+using namespace std;
 class Monster
 {
 public:
@@ -7,6 +11,8 @@ public:
 	int  m_Hp;
 	int  m_Gold;
 	int  AttackRate;
+	string m_MonHint;
+	int m_moveStr;
 
 public:
 	Monster();

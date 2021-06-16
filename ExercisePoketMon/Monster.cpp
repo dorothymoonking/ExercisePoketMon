@@ -1,9 +1,6 @@
 #include "Monster.h"
-#include<string.h>
 #include<iostream>
-#include<string.h>
 
-using namespace std;
 #pragma warning(disable:4996)
 
 Monster::Monster()
@@ -13,6 +10,8 @@ Monster::Monster()
 	m_Hp = 0;
 	m_Gold = 0;
 	AttackRate = 0;
+	m_MonHint = "";
+	m_moveStr = 0;
 }
 
 Monster::Monster(const char* _Name, int _Maxhp, int _Hp, int _Gold, int Att)
@@ -22,6 +21,8 @@ Monster::Monster(const char* _Name, int _Maxhp, int _Hp, int _Gold, int Att)
 	m_Hp = _Hp;
 	m_Gold = _Gold;
 	AttackRate = Att;
+	m_MonHint = "";
+	m_moveStr = 0;
 }
 
 Monster::~Monster()
@@ -32,11 +33,13 @@ void Monster::newMonster(int _data)
 {
 	if (_data == 0)
 	{
-		strcpy(m_MonName, "치치야크");
+		strcpy(m_MonName, "쿠쿠르야크");
 		m_MaxHp = 50;
 		m_Hp = m_MaxHp;
 		m_Gold = 50;
 		AttackRate = 10;
+		m_MonHint = "소조의 울음 소리가 들린다.";
+		m_moveStr = 15;
 	}
 
 	else if (_data == 1)
@@ -46,6 +49,8 @@ void Monster::newMonster(int _data)
 		m_Hp = m_MaxHp;
 		m_Gold = 100;
 		AttackRate = 20;
+		m_MonHint = "그는 자그라스의 왕이라고 불리는...";
+		m_moveStr = 12;
 	}
 	else if (_data == 2)
 	{
@@ -54,6 +59,8 @@ void Monster::newMonster(int _data)
 		m_Hp = m_MaxHp;
 		m_Gold = 150;
 		AttackRate = 30;
+		m_MonHint = "불을 내뿜는 수룡의 모습이 보인다...";
+		m_moveStr = 12;
 	}
 
 	else if (_data == 3)
@@ -63,6 +70,8 @@ void Monster::newMonster(int _data)
 		m_Hp = m_MaxHp;
 		m_Gold = 200;
 		AttackRate = 40;
+		m_MonHint = "불을 내뿜는 커다란 왕의 그림자가 보인다.";
+		m_moveStr = 9;
 	}
 
 	else if (_data == 4)
@@ -72,6 +81,8 @@ void Monster::newMonster(int _data)
 		m_Hp = m_MaxHp;
 		m_Gold = 250;
 		AttackRate = 50;
+		m_MonHint = "고룡을 먹는자...그 몬스터의 이름...";
+		m_moveStr = 12;
 	}
 }
 

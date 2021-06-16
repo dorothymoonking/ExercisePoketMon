@@ -135,7 +135,7 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
 }
 
-void PrintEyes() //몬스터 발견시 실행할 함수
+void PrintEyes(Monster* _Mon) //몬스터 발견시 실행할 함수
 {
 	system("cls");
 	gotoxy(10, 0);
@@ -151,7 +151,9 @@ void PrintEyes() //몬스터 발견시 실행할 함수
 	gotoxy(10, 5);
 	cout << "    □□□             □□□" << endl;
 	gotoxy(20, 7); 
-	cout << "몬스터 발견!";
+	cout << "몬스터 발견! : "; 
+	gotoxy(_Mon->m_moveStr, 7);
+	cout << "<" << _Mon->m_MonHint << ">";
 }
 
 //----- 타이틀
@@ -378,7 +380,11 @@ int RandMonSpawn()
 //-----필드 정찰 및 전투구현
 void Fight(vector<Monster>* _list)
 {
-	PrintEyes();
+	int MonRan = RandMonSpawn();
+	Monster a_Monster;
+	a_Monster.newMonster(MonRan);
+
+	PrintEyes(&a_Monster);
 
 	gotoxy(18, 9);
 	cout << "전투(1) 도망(2) : ";
@@ -397,12 +403,10 @@ void Fight(vector<Monster>* _list)
 		else
 		{
 			cout << "도망 실패! 전투시작!";
+			Sleep(1000);
+			cin.get();
 		}
 	}
-	int MonRan = RandMonSpawn();
-	Monster a_Monster;
-	a_Monster.newMonster(MonRan);
-
 	system("cls");
 	
 	bool AttactTurn = false;
@@ -418,6 +422,8 @@ void Fight(vector<Monster>* _list)
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
 			cout << "<" << a_Monster.m_MonName << ">은 " << g_Hero.AttackRate << "만큼의 피해를 입었다.";
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+			gotoxy(5, gotoY+1);
+			cout << g_Hero.m_Name << "(" << g_Hero.m_Hp << ")" << " : " << a_Monster.m_MonName << "(" << a_Monster.m_Hp << ")";
 			AttactTurn = !AttactTurn;
 			if (Die(&a_Monster, _list) == true)
 			{
@@ -435,6 +441,8 @@ void Fight(vector<Monster>* _list)
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
 			cout << "<" << g_Hero.m_Name << ">은 " << a_Monster.AttackRate << "만큼의 피해를 입었다.";
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+			gotoxy(20, gotoY+1);
+			cout << a_Monster.m_MonName << "(" << a_Monster.m_Hp << ")" << " : " << g_Hero.m_Name << "(" << g_Hero.m_Hp << ")";
 			AttactTurn = !AttactTurn;
 			if (Die() == true)
 			{
@@ -443,7 +451,7 @@ void Fight(vector<Monster>* _list)
 			else
 				Sleep(1000);
 		}
-		gotoY++;
+		gotoY+=3;
 	}
 }
 
